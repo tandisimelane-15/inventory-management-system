@@ -1,7 +1,7 @@
 """Mock in memory database for inventory items"""
 INVENTORY = [
     {
-        "Id" : 1,
+        "id" : 1,
         "barcode": "3017620422003",
         "product_name": "Nutella",
         "brands": "Ferrero",
