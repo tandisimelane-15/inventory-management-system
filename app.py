@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 import data
-
+import external_api
 app = Flask(__name__)
 
 
@@ -48,6 +48,16 @@ def delete_inventory_item(item_id):
         return jsonify({"error": "Item not found"}), 404
     return "", 204
 
+@app.route("/lookup", methods=["GET"])
+def lookup_product():
+    barcode = request.args.get("barcode")
+    if not barcode:
+        return jsonify({"error": "barcode query param required"}), 400
+
+    product = external_api.get_product_by_barcode(barcode)
+    if product is None:
+        return jsonify({"error": "Product not found"}), 404
+    return jsonify(product), 200
 
 if __name__ == "__main__":
     app.run(debug=True)
